@@ -1,5 +1,5 @@
 {
-  "name": "temple-engine",
+  "name": "temple",
   "version": "0.1.0",
   "description": "Templating engine for your usual text files",
   "main": "temple.js",
