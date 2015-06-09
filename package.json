@@ -4,7 +4,6 @@
   "description": "Templating engine for your usual text files",
   "main": "temple.js",
   "scripts": {
-    "start": "node temple.js",
     "test": "node test/test.js"
   },
   "keywords": [
@@ -12,6 +11,10 @@
     "engine",
     "text"
   ],
-  "author": "Albert Kurniawan",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/thrivetide/engine-temple.git"
+  },
+  "author": "Albert Kurniawan <albert@thrivetide.com>",
+  "license": "MIT"
 }
