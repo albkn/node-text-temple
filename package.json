@@ -1,0 +1,17 @@
+{
+  "name": "temple-engine",
+  "version": "0.1.0",
+  "description": "Templating engine for your usual text files",
+  "main": "temple.js",
+  "scripts": {
+    "start": "node temple.js",
+    "test": "node test/test.js"
+  },
+  "keywords": [
+    "template",
+    "engine",
+    "text"
+  ],
+  "author": "Albert Kurniawan",
+  "license": "ISC"
+}
