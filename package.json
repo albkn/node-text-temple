@@ -1,8 +1,8 @@
 {
-  "name": "temple",
+  "name": "text-temple",
   "version": "0.1.0",
   "description": "Templating engine for your usual text files",
-  "main": "temple.js",
+  "main": "text-temple.js",
   "scripts": {
     "test": "node test/test.js"
   },
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/thrivetide/engine-temple.git"
+    "url": "https://bitbucket.org/thrivetide/text-temple.git"
   },
   "author": "Albert Kurniawan <albert@thrivetide.com>",
   "license": "MIT"

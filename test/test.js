@@ -1,4 +1,4 @@
-var temple = require('../temple.js');
+var temple = require('../text-temple.js');
 var fs = require('fs');
 var path = require('path');
 
