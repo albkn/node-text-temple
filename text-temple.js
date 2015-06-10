@@ -9,7 +9,6 @@ function hasCorrectExtension(filePath) {
 API.hasCorrectExtension = hasCorrectExtension;
 
 function absolutizePath(filePath) {
-  if (path.isAbsolute(filePath)) return filePath;
   return path.resolve(path.dirname(require.main.filename), filePath);
 }
 API.absolutizePath = absolutizePath;
