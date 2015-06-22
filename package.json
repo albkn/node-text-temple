@@ -1,6 +1,7 @@
 {
   "name": "text-temple",
   "version": "0.1.0",
+  "private": true,
   "description": "Templating engine for your usual text files",
   "main": "text-temple.js",
   "scripts": {
