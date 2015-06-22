@@ -1,7 +1,6 @@
 var fs = require('fs');
 var path = require('path');
 var config = require('./config.js');
-var API = {};
 
 /**
  * Method to test whether the given path has the correct text-temple file
@@ -15,8 +14,6 @@ var API = {};
 function hasCorrectExtension(filePath) {
   return (path.extname(filePath) === config.extName) ? true : false;
 }
-API.hasCorrectExtension = hasCorrectExtension;
-
 
 /**
  * Method to make sure the given path is absolute. An absolute path will always
@@ -29,10 +26,40 @@ API.hasCorrectExtension = hasCorrectExtension;
  * @return {String} The absolute path after the process.
  */
 function absolutizePath(filePath) {
+  if (!require.main) {
+    // Script is imported to a console session, do nothing to filePath
+    return filePath;
+  }
   return path.resolve(path.dirname(require.main.filename), filePath);
 }
-API.absolutizePath = absolutizePath;
 
+/**
+ * Method to write vanilla string to vanila text files. Can be called both in
+ * Sync or Async way, depending if callback is supplied as the last param.
+ * 
+ * @param {String} filePath The file path of the resulting file. If relative,
+ * will be 'absolutized' first.
+ * @param {String} text The text to be written to the file.
+ * @param {Function} callback The callback should have the signature
+ * callback(error). This is optional and the method will run synchronously if
+ * this is not provided.
+ * @throws {Error} Will thow error if or writing to filePath fails.
+ */
+function writeTextToFile(filePath, text, callback) {
+  // Make sure supplied path is absolute
+  var absFilePath = absolutizePath(filePath);
+  // Do writing to file
+  if (callback) {
+    // Async version
+    fs.writeFile(absFilePath, text, function(err, res) {
+      if (err) return callback(err);
+      callback();
+    });
+  } else {
+    // Sync version
+    fs.writeFileSync(absFilePath, text);  
+  }
+}
 
 /**
  * Method that will replace the template placeholder with the given parameters.
@@ -68,8 +95,6 @@ function compileString(templateString, data) {
   res = res.replace(new RegExp(reEmpty, 'g'), '');
   return res;
 }
-API.compileString = compileString;
-
 
 /**
  * Method to compile the given template file with the given data parameters.
@@ -133,7 +158,12 @@ function compileFile(templateFile, data, resultFile, callback) {
     fs.writeFileSync(resultPath , result);
   }
 }
-API.compileFile = compileFile;
 
-
-module.exports = API;
+// Exports
+module.exports = {
+  hasCorrectExtension: hasCorrectExtension,
+  absolutizePath: absolutizePath,
+  writeTextToFile: writeTextToFile,
+  compileString: compileString,
+  compileFile: compileFile, 
+}
