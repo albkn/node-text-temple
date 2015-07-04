@@ -43,7 +43,7 @@ function absolutizePath(filePath) {
  * @param {Function} callback The callback should have the signature
  * callback(error). This is optional and the method will run synchronously if
  * this is not provided.
- * @throws {Error} Will thow error if or writing to filePath fails.
+ * @throws {Error} Will throw error if writing to filePath fails.
  */
 function writeTextToFile(filePath, text, callback) {
   // Make sure supplied path is absolute
