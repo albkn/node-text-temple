@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var config = require('./config.js');
+var compiler = require('./compiler.js');
 
 /**
  * Method to test whether the given path has the correct text-temple file
@@ -62,37 +63,20 @@ function writeTextToFile(filePath, text, callback) {
 }
 
 /**
- * Method that will replace the template placeholder with the given parameters.
- * Currently uses regex based approach and replaces not not-defined template
- * placeholders to empty strings. For example, if data is {name: 'bob'},
- * then {{name}} in the template string will replaced with bob and {{age}} will
- * be replaced with an empty string ''.
+ * Method that will do template compilation. Currently supports variable
+ * injection, un-nested EACH loops and un-nested IF conditionals. Currently
+ * uses a one-pass approach where when an EACH or IF block is found, the 
+ * closing token is assumed to be the nearest {{/each}} or {{/if}} token.
+ * Note that for the EACH loops, that specific variable must be an array of 
+ * Objects.
  *
- * @param {String} templateString The string that holds template placeholders
- * to be replaced.
+ * @param {String} templateString The template in string format.
  * @param {Object} data The data parameters that will replace a matching
  * template placeholder.
  * @return {String} The resulting string after the template compilation.
  */
 function compileString(templateString, data) {
-  var res = templateString;
-  // Replace all defined data properties in templateString
-  // Note: currently using regex
-  for (var property in data) {
-    if (!data.hasOwnProperty(property)) continue;
-    // Do regex replace
-    var reProperty = config.openingToken +
-      '\ *' +
-      property +
-      '\ *' +
-      config.closingToken;
-    var currRegexp = new RegExp(reProperty, 'g');
-    res = res.replace(currRegexp, data[property]);
-  }
-
-  // Replace all not define data properties to empty strings ('')
-  var reEmpty = config.openingToken + '.*?' + config.closingToken;
-  res = res.replace(new RegExp(reEmpty, 'g'), '');
+  var res = compiler.compile(templateString, data);
   return res;
 }
 

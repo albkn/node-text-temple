@@ -1,23 +1,16 @@
-var TOKENS = {
-  OPEN: '{{',
-  CLOSE: '}}',
-  EACH_OPEN: '{{#each',
-  EACH_END: '{{/each}}',
-  IF_OPEN: '{{#if',
-  IF_END: '{{/if}}',
-};
+var TOKENS = require('./config.js').TOKENS;
 
 function processEACH(content, data) {
   var resString = '';
   for (var i = 0; i < data.length; i++) {
-    resString += compile(content, data[i]);
+    resString += compile(content, data[i]).replace(/^\n/, '');
   }
-  return resString;
+  return resString.replace(/\n$/, '');
 }
 
 function processIF(content, data) {
   if (!data) return '';
-  return compile(content, data);
+  return compile(content, data).replace(/^\n/, '').replace(/\n$/, '');
 }
 
 function compile(content, data) {

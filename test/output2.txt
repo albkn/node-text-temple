@@ -1,0 +1,22 @@
+# Install curl, git, meteor
+RUN apt-get update && apt-get install -y curl git
+RUN curl https://install.meteor.com/ | sh
+
+# Download meteor app (since buggy, use microscope for now)
+RUN git clone https://github.com/DiscoverMeteor/Microscope.git home/app
+
+COPY /tmp/xyz /home/app/private/
+COPY /tmp/xyz /home/app/private/
+COPY /tmp/xyz /home/app/private/
+COPY /tmp/xyz /home/app/private/
+COPY /tmp/xyz /home/app/private/
+
+  ADD /tmp/xyz /home/app/private/
+  ADD /tmp/temp/xyz /home/app/public/
+  ADD /a /home/app/lib/collections/schemas
+
+# Move to app directory
+WORKDIR /home/app
+
+# Start app as entrypoint
+ENTRYPOINT ["meteor"]
