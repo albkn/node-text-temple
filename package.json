@@ -14,9 +14,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/thrivetide/text-temple.git"
+    "url": "https://github.com/kAlbert19/node-text-temple.git"
   },
-  "author": "Albert Kurniawan <albert@thrivetide.com>",
+  "author": "Albert Kurniawan <kurniawan.albert19@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "fs": "0.0.2",
