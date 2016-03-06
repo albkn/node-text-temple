@@ -75,8 +75,8 @@ function compile(content, data) {
   resString += content.slice(closePos);
 
   // Translate all ESCAPE_OPEN and ESCAPE_CLOSE to OPEN and CLOSE tokens
-  resString = resString.replace(TOKENS.ESCAPE_OPEN, TOKENS.OPEN);
-  resString = resString.replace(TOKENS.ESCAPE_CLOSE, TOKENS.CLOSE);
+  resString = resString.replace(new RegExp(TOKENS.ESCAPE_OPEN, 'g'), TOKENS.OPEN);
+  resString = resString.replace(new RegExp(TOKENS.ESCAPE_CLOSE, 'g'), TOKENS.CLOSE);
   return resString;
 }
 
