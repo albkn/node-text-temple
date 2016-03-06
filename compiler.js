@@ -20,18 +20,18 @@ function compile(content, data) {
   var openPos = 0;
   var closePos = 0;
   var tempPointer = 0;
-  
+
   openPos = content.indexOf(TOKENS.OPEN, closePos);
   while (openPos !== -1) {
     // Copy all text between last closePos and current openPos
     resString += content.slice(closePos, openPos);
-    
+
     // Get current tag
     closePos = content.indexOf(TOKENS.CLOSE, openPos+TOKENS.OPEN.length) + TOKENS.CLOSE.length;
     tag = content
       .slice(openPos+TOKENS.OPEN.length, closePos-TOKENS.CLOSE.length)
       .trim();
-    
+
     // Handle tokens
     if (tag.match(/^\#if/)) {
       /* IF TOKEN */
@@ -42,7 +42,7 @@ function compile(content, data) {
       tempPointer = content.indexOf(TOKENS.IF_END, closePos);
       // Do processing
       resString += processIF(
-        content.slice(closePos, tempPointer), 
+        content.slice(closePos, tempPointer),
         data[variable]
       );
       // Update end pointer to the closing {{/if}} token
@@ -56,7 +56,7 @@ function compile(content, data) {
       tempPointer = content.indexOf(TOKENS.EACH_END, closePos);
       // Do processing
       resString += processEACH(
-        content.slice(closePos, tempPointer), 
+        content.slice(closePos, tempPointer),
         data[variable]
       );
       // Update end pointer to the closing {{/each}} token
@@ -70,9 +70,13 @@ function compile(content, data) {
     // Update openPos
     openPos = content.indexOf(TOKENS.OPEN, closePos);
   }
-  
+
   // Copy final bits between last closePos to end of file
   resString += content.slice(closePos);
+
+  // Translate all ESCAPE_OPEN and ESCAPE_CLOSE to OPEN and CLOSE tokens
+  resString = resString.replace(TOKENS.ESCAPE_OPEN, TOKENS.OPEN);
+  resString = resString.replace(TOKENS.ESCAPE_CLOSE, TOKENS.CLOSE);
   return resString;
 }
 
